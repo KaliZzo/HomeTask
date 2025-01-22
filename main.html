@@ -7,16 +7,25 @@
     <script>
         const API_KEY = '24363633-ff95388b0ab0244ead19289a8';
         const BASE_URL = "https://pixabay.com/api/";
-
-        async function pixabayAPI(image){
-            const URL = `${BASE_URL}?key${API_KEY}&q=${encodeURIComponent(image)}`
+       
+        async function pixabayAPI(event){
+            event.preventDefault();
+            const searchBar =document.getElementById('searchBar').value 
+            const URL = `${BASE_URL}?key=${API_KEY}&q=${encodeURIComponent(searchBar)}`; // need to fix
+            
             
             try{
                 const response = await fetch(URL)
+                
+
                 if(!response.ok){
                     throw new Error(`Cant Fetch API`)
+                    
+
                 }
-               
+                const data = await response.json();
+                console.log(data);
+                
             } catch(error){
                 console.error(`There is an error`, error)
             } 
@@ -26,9 +35,9 @@
     </script>
 </head>
 <body>
-    <form id="form"> 
-        <input type="search" id="query" name="q" placeholder="Search...">
-        <button onclick="pixabayAPI()">Search</button>
+    <form id="form" onsubmit="pixabayAPI(event)"> 
+        <input type="search" id="searchBar" name="q" placeholder="Search...">
+        <button>Search</button>
       </form>
 </body>
 </html>
