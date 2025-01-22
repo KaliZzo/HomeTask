@@ -31,9 +31,10 @@
                 for(let i = 0; i <data.hits.length; i++){
                     const callImage = data.hits[i]
                     imageDiv.innerHTML += `
-                        <div class="card">
-                         <img src="${callImage.webformatURL}">
-                         </div>`
+    <div class="card">
+        <img src="${callImage.webformatURL}" " 
+        onclick="modal('${callImage.webformatURL}') onclick="addToFavorites('${callImage.webformatURL}')">❤️">
+    </div>`;
     
                 }
                 
@@ -43,12 +44,44 @@
 
         }
        
+        function modal(image, text, likes, views) {
+            document.getElementById('modalImage').src = image;
+            document.getElementById('modalText').innerHTML = `
+                <p> ${text}</p>
+             
+             `;
+    document.getElementById('myModal').style.display = 'block';
+}
+
+        function modalOff(){
+            document.getElementById('myModal').style.display = 'none'
+        }
+
+
+        function tags(tag) {
+    document.getElementById('searchBar').value = tag; 
+    pixabayAPI({ preventDefault: () => {} }); 
+}
+
     </script>
     
-    <style> 
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    
+        form {
+            display: flex;
+            justify-content: center;
+            margin: 16px;
+        }
+    
+    
+
         #images {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 16px;
             padding: 16px;
         }
@@ -58,21 +91,35 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
         }
     
         .card img {
             width: 100%;
             height: auto;
-            display: block;
         }
     
-        .card p {
-            margin: 8px 0;
-            padding: 0 8px;
-            font-size: 14px;
-            color: #333;
+      
+        @media screen and (max-width: 600px) {
+            #searchBar {
+                width: 100%;
+            }
+    
+            button {
+                padding: 8px;
+                width: 30%;
+            }
+    
+            #images {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+           
         }
+        .card img:hover {
+             transform: scale(1.1);
+            box-shadow: 0 4px 8px red
+            }
+
     </style>
 </head>
 <body>
@@ -80,9 +127,39 @@
         <input type="search" id="searchBar" name="q" placeholder="Search...">
         <button>Search</button>
       </form>
-      <div id="images">
-        
+
+      <div id="tags">
+        <button onclick="tags('Background')">Background</button>
+        <button onclick="tags('Wallpaper')">Wallpaper</button>
+        <button onclick="tags('Nature')">Nature</button>
       </div>
+
+      
+      <div id="images"></div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+            <img id="modalImage" src="" alt="" style="width: 100%; height: auto;">
+            <p id="modalText"></p>
+          </div>          
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="modalOff()">Close</button>
+        </div>
+      </div>
+   
+    </div>
+  </div>
+  
+</div>
+</div>
+
+
 </body>
 </html>
 
