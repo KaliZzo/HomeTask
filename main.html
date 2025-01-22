@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const API_KEY = '24363633-ff95388b0ab0244ead19289a8';
+        const BASE_URL = "https://pixabay.com/api/";
+
+        async function pixabayAPI(image){
+            const URL = `${BASE_URL}?key${API_KEY}&q=${encodeURIComponent(image)}`
+            
+            try{
+                const response = await fetch(URL)
+                if(!response.ok){
+                    throw new Error(`Cant Fetch API`)
+                }
+               
+            } catch(error){
+                console.error(`There is an error`, error)
+            } 
+
+        }
+       
+    </script>
+</head>
+<body>
+    <form id="form"> 
+        <input type="search" id="query" name="q" placeholder="Search...">
+        <button onclick="pixabayAPI()">Search</button>
+      </form>
+</body>
+</html>
+
