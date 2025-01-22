@@ -25,6 +25,17 @@
                 }
                 const data = await response.json();
                 console.log(data);
+                const imageDiv = document.getElementById('images')
+                imageDiv.innerHTML ='';
+
+                for(let i = 0; i <data.hits.length; i++){
+                    const callImage = data.hits[i]
+                    imageDiv.innerHTML += `
+                        <div class="card">
+                         <img src="${callImage.webformatURL}">
+                         </div>`
+    
+                }
                 
             } catch(error){
                 console.error(`There is an error`, error)
@@ -33,12 +44,45 @@
         }
        
     </script>
+    
+    <style> 
+        #images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            padding: 16px;
+        }
+    
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    
+        .card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    
+        .card p {
+            margin: 8px 0;
+            padding: 0 8px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <form id="form" onsubmit="pixabayAPI(event)"> 
         <input type="search" id="searchBar" name="q" placeholder="Search...">
         <button>Search</button>
       </form>
+      <div id="images">
+        
+      </div>
 </body>
 </html>
 
