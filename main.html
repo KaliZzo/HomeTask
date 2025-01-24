@@ -30,11 +30,16 @@
 
                 for(let i = 0; i <data.hits.length; i++){
                     const callImage = data.hits[i]
-                    imageDiv.innerHTML += `
-    <div class="card">
-        <img src="${callImage.webformatURL}" " 
-        onclick="modal('${callImage.webformatURL}') onclick="addToFavorites('${callImage.webformatURL}')">❤️">
-    </div>`;
+                    imageDiv.innerHTML +=  `
+                <div class="card">
+                    <img src="${callImage.webformatURL}" 
+                        onclick="modal('${callImage.webformatURL}', '${callImage.comments}', ${callImage.likes}, ${callImage.views})">
+                    <div class="info">
+                        <p><strong>Tags:</strong> ${callImage.comments}</p>
+                        <p><strong>Likes:</strong> ${callImage.likes}</p>
+                        <p><strong>Views:</strong> ${callImage.views}</p>
+                    </div>
+                </div>`;
     
                 }
                 
@@ -44,10 +49,12 @@
 
         }
        
-        function modal(image, text, likes, views) {
+        function modal(image, comments, likes, views) {
             document.getElementById('modalImage').src = image;
             document.getElementById('modalText').innerHTML = `
-                <p> ${text}</p>
+                <p><strong>Comments:</strong> ${comments}</p>
+                <p><strong>Likes:</strong> ${likes}</p>
+                <p><strong>Views:</strong> ${views}</p>
              
              `;
     document.getElementById('myModal').style.display = 'block';
@@ -87,17 +94,39 @@
         }
     
         .card {
+            position: relative;
+            overflow: hidden;
             border: 1px solid #ccc;
             border-radius: 8px;
-            overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
     
         .card img {
-            width: 100%;
-            height: auto;
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease;
         }
     
+        .card:hover img {
+    transform: scale(1.1); 
+}
+
+.card .info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6); 
+    color: white; 
+    padding: 10px;
+    text-align: left;
+    opacity: 0; 
+}
+
+.card:hover .info {
+    opacity: 1;
+}
       
         @media screen and (max-width: 600px) {
             #searchBar {
